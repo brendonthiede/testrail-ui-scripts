@@ -1,0 +1,74 @@
+name: Filter by Automated tag
+description: Allows for cloning a test step
+author: Brendon thiede
+version: 1.0
+includes: ^suites/view
+excludes:
+
+js:
+$(document).ready(function () {
+    window.TestRailCustomUI = window.TestRailCustomUI || {};
+    window.TestRailCustomUI.TagFilter = window.TestRailCustomUI.agFilter || {};
+
+    window.TestRailCustomUI.TagFilter.filter = function (tagValue, isChecked) {
+        if (isChecked) {
+            $('.tag-' + tagValue).hide();
+            localStorage.setItem('tagsFilter' + tagValue, true)
+        } else {
+            $('.tag-' + tagValue).show();
+            localStorage.setItem('tagsFilter' + tagValue, false)
+        }
+    };
+
+    window.TestRailCustomUI.TagFilter.assignTags = function () {
+        var tagsChildPosition = -1;
+        $('tr.header:first>th>a.link-noline').each(function (index) {
+            if ($(this).text() === 'Tags') {
+                tagsChildPosition = index + 3;
+            }
+        });
+        if (tagsChildPosition > 2) {
+            $('tr.caseRow').each(function () {
+                var $this = $(this);
+                $this.find('td:nth-child(' + tagsChildPosition + ')').text()
+                    .replace(/\s/g, '').split(',')
+                    .forEach(function (tagValue) {
+                        $this.addClass('tag-' + tagValue);
+                    });
+            });
+        }
+    };
+
+    window.TestRailCustomUI.TagFilter.addFilterCheckbox = function (tagValue) {
+        var tagFilterId = 'tag-filter-' + tagValue;
+        var $tagFilter = $('#' + tagFilterId);
+        if ($('tr.header>th>a.link-noline:contains("Tags")').length > 0) {
+            if ($tagFilter.length === 0) {
+                $tagFilter = $('<li id="' + tagFilterId + '" class="toolbar-menu-item toolbar-menu-item-last text-ppp"/>');
+                var tagFilterInputId = tagFilterId + '-input';
+                var $tagFilterInput = $('<input id="' + tagFilterInputId + '" type="checkbox" class="selectionCheckbox">');
+                $tagFilterInput.attr('data-tag-value', tagValue);
+                $tagFilterInput.attr('title', 'Hides entries with a tag of ' + tagValue);
+                $tagFilterInput.change(function () {
+                    window.TestRailCustomUI.TagFilter.filter(tagValue, $(this).is(':checked'));
+                });
+                var $tagFilterLabel = $('<label for="' + tagFilterInputId + '"> Hide ' + tagValue + '</label>');
+                $tagFilter.append($tagFilterInput);
+                $tagFilter.append($tagFilterLabel);
+                $('ul.toolbar-menu').append($tagFilter);
+                if (localStorage.getItem('tagsFilter' + tagValue)) {
+                    setTimeout(function () {
+                        $tagFilterInput.click();
+                    }, 100);
+                }
+            }
+        } else {
+            $tagFilter.remove();
+        }
+    };
+
+    $(document).ajaxSuccess(function(e, xhr, opt) {
+        TestRailCustomUI.TagFilter.addFilterCheckbox('Automated');
+        window.TestRailCustomUI.TagFilter.assignTags();
+    });
+});
