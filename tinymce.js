@@ -32,7 +32,7 @@ function loadMce(caller) {
 
         var $loadButton = $(caller);
         var $unloadButton = $loadButton.parent().find('a.unload-mce');
-        var $imageButton = $unloadButton.parent().find('img[src="images/icons/markdownImage.png"]').parent();
+        var $imageButton = $unloadButton.parent().find('img[src="https://static.testrail.io/5.6.0.3862/images/icons/markdownImage.png"]').parent();
         var textareaId = $loadButton.attr('data-textarea-id');
         var clonerId = textareaId + '-cloner';
         var selector = 'textarea#' + textareaId;
@@ -76,7 +76,7 @@ function unloadMce(caller) {
     synchronize(true);
     var $unloadButton = $(caller);
     var $loadButton = $unloadButton.parent().find('a.load-mce');
-    var $imageButton = $unloadButton.parent().find('img[src="images/icons/markdownImage.png"]').parent();
+    var $imageButton = $unloadButton.parent().find('img[src="https://static.testrail.io/5.6.0.3862/images/icons/markdownImage.png"]').parent();
     var textareaId = $(caller).attr('data-textarea-id');
     var clonerId = textareaId + '-cloner';
     tinyMCE.editors[clonerId].remove();
@@ -91,7 +91,7 @@ function createTinyMceButtons() {
     $('div.form-group').not('.mce-enabled').each(function () {
         $(this).addClass('mce-enabled');
         var $toolbar = $(this).find('label>span.form-toolbar');
-        var $markdownHelpLink = $toolbar.find('img[src="images/icons/markdownHelp.png"]').parent();
+        var $markdownHelpLink = $toolbar.find('img[src="https://static.testrail.io/5.6.0.3862/images/icons/markdownHelp.png"]').parent();
 
         var $loadButton = $('<a class="load-mce link-tooltip" href="javascript:void(0)" onclick="loadMce(this)" />');
         $loadButton.attr('data-textarea-id', $(this).find('textarea').attr('id'));

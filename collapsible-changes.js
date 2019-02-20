@@ -13,7 +13,7 @@ function toggleSection(caller) {
     if ($collapsedTable.length == 0) {
         $collapsedTable = $change.find('div.table').clone();
         $collapsedTable.addClass('collapsed');
-        $collapsedTable.find('a.collapser>img').attr('src', 'images/icons/expand.png');
+        $collapsedTable.find('a.collapser>img').attr('src', 'https://static.testrail.io/5.6.0.3862/images/icons/expand.png');
         var changer = " " + $collapsedTable.find('div.change-meta p>span>strong').text();
         $collapsedTable.find('div.change-meta p').remove();
         $collapsedTable.find('div.change-meta').append(changer);
@@ -34,7 +34,7 @@ function toggleSection(caller) {
 
 $(document).ready(function () {
     $('span.status').before('<a href="javascript:void(0)" class="collapser" onclick="toggleSection(this)" />');
-    $('a.collapser').html('<img src="images/icons/collapse.png" /> ').each(function() {
+    $('a.collapser').html('<img src="https://static.testrail.io/5.6.0.3862/images/icons/collapse.png" /> ').each(function() {
         $(this).closest('div.table').addClass('expanded');
         toggleSection(this);
     });

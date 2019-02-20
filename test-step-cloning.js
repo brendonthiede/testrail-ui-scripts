@@ -64,7 +64,7 @@ $(document).ready(function () {
             if ($stepButtons.find("div.clone").length == 0) {
                 var $cloneButton = $stepButtons.find("a.moveDown:first").clone();
                 var $cloneImage = $cloneButton.find("img");
-                $cloneImage.attr("src", "images/icons/move.png");
+                $cloneImage.attr("src", "https://static.testrail.io/5.6.0.3862/images/icons/move.png");
                 $cloneImage.attr("alt", "Clone");
                 $cloneImage.attr("title", "Clone");
                 $cloneButton.attr("onClick", $cloneButton.attr("onClick").replace("App.Cases.addStep", "TestRailCustomUI.Cases.cloneStep"));
